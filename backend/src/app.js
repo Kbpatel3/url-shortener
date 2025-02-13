@@ -1,13 +1,16 @@
-const express = require('express');
-const cors = require('cors');
-const connectDB = require('./config/db');
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import connectDB from './config/db.js';
+import urlRoutes from './routes/urlRoutes.js';
 
-require('dotenv').config();
+dotenv.config();
 connectDB();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.use('/api/url', urlRoutes);
 
-module.exports = app;
+export default app;
