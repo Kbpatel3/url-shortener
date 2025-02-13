@@ -48,7 +48,7 @@ export const redirectToUrl = async (req, res) => {
 
         // If the URL document is not found, return an error response
         if (!urlDoc) {
-            return res.status(404).json({ error: 'URL not found' });
+            return res.status(404).sendFile('404.html', { root: './public' });
         }
 
         // Redirect to the original URL
