@@ -1,4 +1,3 @@
-import { type } from 'os';
 import Url from '../models/Url.js';
 import { faker } from "@faker-js/faker";
 
@@ -19,7 +18,9 @@ export const createShortUrl = async (req, res) => {
         while (isDuplicate) {
             shortUrl = faker.word.noun();
             const existingUrl = await Url.findOne({ shortUrl });
+
             if (!existingUrl) isDuplicate = false;
+            if (shortUrl === 'shorten') isDuplicate = true;
         }
 
         // Create a new URL document with deletedAt set to 5 minutes from now
@@ -44,8 +45,6 @@ export const redirectToUrl = async (req, res) => {
 
         // Find the URL document with the matching short URL
         const urlDoc = await Url.findOne({ shortUrl });
-
-        console.log("URL Document: ", urlDoc);
 
         // If the URL document is not found, return an error response
         if (!urlDoc) {
